@@ -5,3 +5,48 @@
 .clip-path-custom {
     clip-path: polygon(0 30%, 100% 0, 100% 100%, 0% 100%);
 }
+
+@keyframes fade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade {
+    animation: fade 0.3s ease;
+}
+
+@keyframes slideLeft {
+    from {
+        transform: translateX(40px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(-40px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-left {
+    animation: slideLeft 0.35s ease;
+}
+
+.animate-slide-right {
+    animation: slideRight 0.35s ease;
+}

@@ -5,6 +5,9 @@ import NotesSection from "./components/NotesSection";
 
 function App() {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
+  const [notes, setNotes] = useState({});
+  const [endDate, setEndDate] = useState(null);
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center justify-center p-2 md:p-4">
@@ -16,8 +19,18 @@ function App() {
           <CalendarGrid
             currentDate={currentDate}
             setCurrentDate={setCurrentDate}
+            notes = {notes}
+            startDate = {startDate}
+            endDate = {endDate}
+            setStartDate = {setStartDate}
+            setEndDate = {setEndDate}
           />
-          <NotesSection />
+          <NotesSection 
+            notes = {notes}
+            setNotes = {setNotes}
+            startDate = {startDate}
+            endDate = {endDate}
+          />
         </div>
 
       </div>
