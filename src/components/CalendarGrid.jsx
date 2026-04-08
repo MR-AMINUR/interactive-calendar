@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { format } from "date-fns";
 import {
   format,
   startOfMonth,
@@ -19,6 +20,7 @@ function CalendarGrid({
   endDate,
   setStartDate,
   setEndDate,
+  setSelectedDate,
 }) {
   const [activeNote, setActiveNote] = useState(null);
   const [direction, setDirection] = useState(1);
@@ -98,24 +100,24 @@ function CalendarGrid({
       </div>
 
       <div style={{ perspective: "1000px" }}>
-  <motion.div
-    key={currentDate}
-    className="grid grid-cols-7 gap-2"
-    initial={{
-      rotateY: direction === 1 ? 90 : -90,
-      opacity: 0,
-    }}
-    animate={{
-      rotateY: 0,
-      opacity: 1,
-    }}
-    transition={{
-      duration: 0.5,
-    }}
-    style={{
-      transformStyle: "preserve-3d",
-    }}
-  >
+      <motion.div
+        key={currentDate}
+        className="grid grid-cols-7 gap-2"
+        initial={{
+          rotateY: direction === 1 ? 90 : -90,
+          opacity: 0,
+        }}
+        animate={{
+          rotateY: 0,
+          opacity: 1,
+        }}
+        transition={{
+          duration: 0.5,
+        }}
+        style={{
+          transformStyle: "preserve-3d",
+        }}
+      >
     {/* Empty spaces */}
     {Array.from({ length: startDay === 0 ? 6 : startDay - 1 }).map(
       (_, i) => (
@@ -140,11 +142,15 @@ function CalendarGrid({
       const dayIndex = getDay(date);
       const isWeekend = dayIndex === 0 || dayIndex === 6;
 
+      const today = new Date();
+      const isToday = isSameDay(date, today);
+
       return (
         <div
           key={date}
           onClick={() => {
             handleDateClick(date);
+            setSelectedDate(format(date, "yyyy-MM-dd"));
 
             if (note) {
               setActiveNote({
@@ -156,11 +162,12 @@ function CalendarGrid({
             }
           }}
           className={`relative h-12 md:h-10 flex flex-col items-center justify-center text-sm rounded-lg cursor-pointer transition-all duration-200
-
+          
           ${isStart || isEnd ? "bg-blue-600 text-white scale-105 shadow-md" : ""}
           ${isInRange ? "bg-blue-200" : ""}
           ${isWeekend ? "text-red-400" : ""}
           ${holiday ? "bg-red-200 text-red-600 font-semibold" : ""}
+          ${isToday ? "border-2 border-blue-500" : ""}
 
           hover:bg-blue-100 hover:scale-105
           `}
