@@ -40,7 +40,7 @@ function App() {
             setNotes = {setNotes}
             startDate = {startDate}
             endDate = {endDate}
-            selectedDate = {setSelectedDate}
+            selectedDate = {selectedDate}
           />
           </div>
         </motion.div>
