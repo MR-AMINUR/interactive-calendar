@@ -1,5 +1,3 @@
-
-
 import { format } from "date-fns";
 
 function HeroImage({ currentDate }) {
@@ -23,20 +21,31 @@ function HeroImage({ currentDate }) {
   const image = monthImages[month];
 
   return (
-    <div className="relative h-64 md:h-80 overflow-hidden rounded-t-2xl">
-      
-      {/* Image */}
+    <div className="relative h-40 md:h-72 overflow-hidden rounded-t-2xl">
+
+      {/* Skeleton shown while image loads */}
+      <div className="absolute inset-0 bg-gray-300 animate-pulse" />
+
+      {/* Hero image with fade-in on load */}
       <img
-        src={image}
-        alt="month"
-        className="w-full h-full object-cover"
+        src={`${image}?auto=format&fit=crop&w=1200&q=80`}
+        alt={format(currentDate, "MMMM yyyy")}
+        loading="lazy"
+        className="w-full h-full object-cover opacity-0 transition-opacity duration-700 relative z-10"
+        onLoad={(e) => {
+          e.target.classList.remove("opacity-0");
+          e.target.classList.add("opacity-100");
+        }}
       />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-        <h2 className="text-white text-xl md:text-3xl font-bold">
-          {format(currentDate, "MMMM yyyy")}
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/50 z-20 flex flex-col items-center justify-center gap-1">
+        <h2 className="text-white text-2xl md:text-4xl font-bold tracking-wide drop-shadow-lg">
+          {format(currentDate, "MMMM")}
         </h2>
+        <p className="text-white/80 text-sm md:text-lg tracking-widest drop-shadow">
+          {format(currentDate, "yyyy")}
+        </p>
       </div>
 
     </div>
